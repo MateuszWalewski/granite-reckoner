@@ -1,3 +1,4 @@
+use std::fmt;
 use std::marker::PhantomData;
 
 pub trait Numeric {}
@@ -27,7 +28,18 @@ impl<T: Numeric> EmptyColumn<T> {
     }
 }
 
-impl<T: Numeric> Column<T> {
+impl<T: Numeric + std::fmt::Display> fmt::Debug for Column<T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        for idx in 0..self.data.len() - 2 {
+            write!(f, "{}\n", self.data[idx])?;
+        }
+        write!(f, "{}", self.data[self.data.len() - 1])?;
+
+        Ok(())
+    }
+}
+
+impl<T: Numeric + std::fmt::Debug + std::fmt::Display> Column<T> {
     pub fn new() -> EmptyColumn<T> {
         EmptyColumn::<T> {
             phantom: PhantomData,
@@ -36,6 +48,10 @@ impl<T: Numeric> Column<T> {
 
     pub fn aggregate(&self) -> &T {
         &self.data[1]
+    }
+
+    pub fn print(&self) {
+        println!("{:?}", &self);
     }
 }
 

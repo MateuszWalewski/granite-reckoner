@@ -5,6 +5,7 @@ fn main() {
     let column = Column::new();
     let column = column.add_data(container);
 
+    column.print();
     let result = column.aggregate();
 
     println!("result = {}", result);
