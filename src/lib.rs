@@ -1,3 +1,5 @@
+use std::marker::PhantomData;
+
 pub trait Numeric {}
 
 impl Numeric for i8 {}
@@ -11,19 +13,28 @@ impl Numeric for u64 {}
 impl Numeric for f32 {}
 impl Numeric for f64 {}
 
+pub struct EmptyColumn<T: Numeric> {
+    phantom: PhantomData<T>,
+}
 
 pub struct Column<T: Numeric> {
-    data: Vec<T>
+    data: Vec<T>,
+}
+
+impl<T: Numeric> EmptyColumn<T> {
+    pub fn add_data(self, container: Vec<T>) -> Column<T> {
+        Column { data: container }
+    }
 }
 
 impl<T: Numeric> Column<T> {
-    pub fn new(container: Vec<T>) -> Column<T> {
-       Column{ 
-           data: container,
-       }
+    pub fn new() -> EmptyColumn<T> {
+        EmptyColumn::<T> {
+            phantom: PhantomData,
+        }
     }
 
-    pub fn sum(&self) -> &T {
+    pub fn aggregate(&self) -> &T {
         &self.data[1]
     }
 }
