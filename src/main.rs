@@ -6,7 +6,8 @@ fn main() {
     let column = column.add_data(container);
 
     column.print();
-    let result = column.aggregate();
-
+    let result = column.sum();
     println!("result = {}", result);
+    let result2 = column.count();
+    println!("result2 = {}", result2);
 }

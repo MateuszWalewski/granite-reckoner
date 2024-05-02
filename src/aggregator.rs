@@ -1,15 +1,10 @@
 use crate::ColumnData;
+use std::ops::Add;
 
-pub fn run<T: for<'a> std::ops::Add<&'a T, Output = T> + Default>(
-    data: &ColumnData<T>,
-    operation: &str,
-) -> T {
-    match operation {
-        "Sum" => sum(data),
-        _ => sum(data),
-    }
+pub fn sum<T: for<'a> Add<&'a T, Output = T> + Default>(data: &ColumnData<T>) -> T {
+    data.data().iter().fold(T::default(), |acc, e| acc + e)
 }
 
-fn sum<T: for<'a> std::ops::Add<&'a T, Output = T> + Default>(data: &ColumnData<T>) -> T {
-    data.data().iter().fold(T::default(), |acc, e| acc + e)
+pub fn count<T>(data: &ColumnData<T>) -> usize {
+    data.data().iter().count()
 }

@@ -1,4 +1,9 @@
-use std::{fmt, marker::PhantomData};
+use std::{
+    default::Default,
+    fmt::{self, Debug, Display, Formatter},
+    marker::PhantomData,
+    ops::Add,
+};
 
 mod aggregator;
 mod column_data;
@@ -38,10 +43,10 @@ impl<T: Numeric> EmptyColumn<T> {
     }
 }
 
-impl<T: Numeric + std::fmt::Display> fmt::Debug for Column<T> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl<T: Numeric + Display> Debug for Column<T> {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         let inner_data = self.data.data();
-        for idx in 0..inner_data.len() - 2 {
+        for idx in 0..inner_data.len() - 1 {
             write!(f, "{}\n", inner_data[idx])?;
         }
         write!(f, "{}", inner_data[inner_data.len() - 1])?;
@@ -50,22 +55,19 @@ impl<T: Numeric + std::fmt::Display> fmt::Debug for Column<T> {
     }
 }
 
-impl<
-        T: for<'a> std::ops::Add<&'a T, Output = T>
-            + Numeric
-            + std::fmt::Debug
-            + std::fmt::Display
-            + std::default::Default,
-    > Column<T>
-{
+impl<T: for<'a> Add<&'a T, Output = T> + Numeric + Debug + Display + Default> Column<T> {
     pub fn new() -> EmptyColumn<T> {
         EmptyColumn::<T> {
             phantom: PhantomData,
         }
     }
 
-    pub fn aggregate(&self) -> T {
-        aggregator::run(&self.data, "Sum")
+    pub fn sum(&self) -> T {
+        aggregator::sum(&self.data)
+    }
+
+    pub fn count(&self) -> usize {
+        aggregator::count(&self.data)
     }
 
     pub fn print(&self) {
