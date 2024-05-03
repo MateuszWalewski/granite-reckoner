@@ -23,14 +23,7 @@ impl Numeric for f32 {}
 impl Numeric for f64 {}
 
 pub trait NumericType<T>:
-    Numeric
-    + Display
-    + for<'a> Add<&'a T, Output = T>
-    + Debug
-    + Default
-    + Send
-    + Sync
-    + 'static
+    Numeric + Display + for<'a> Add<&'a T, Output = T> + Debug + Default + Send + Sync + 'static
 {
 }
 impl<

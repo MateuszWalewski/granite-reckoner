@@ -9,7 +9,6 @@ mod traits;
 use crate::column_data::ColumnData;
 use crate::traits::NumericType;
 
-
 pub struct EmptyColumn<T: NumericType<T>> {
     phantom: PhantomData<T>,
 }
@@ -25,7 +24,6 @@ impl<T: NumericType<T>> EmptyColumn<T> {
         }
     }
 }
-
 
 impl<T: NumericType<T>> Column<T> {
     pub fn new() -> EmptyColumn<T> {

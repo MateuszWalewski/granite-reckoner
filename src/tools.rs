@@ -1,5 +1,6 @@
-use std::{cmp,
-    fmt::{self,Formatter, Debug},
+use std::{
+    cmp,
+    fmt::{self, Debug, Formatter},
 };
 
 use crate::{Column, NumericType};
