@@ -1,22 +1,9 @@
-use crate::tools;
-use crate::ColumnData;
-use std::marker::Send;
-use std::ops::Add;
-use std::sync::mpsc;
-use std::thread;
+use crate::{constants, tools, ColumnData, NumericType};
+use std::{sync::mpsc, thread};
 
-pub fn sum<
-    T: for<'a> Add<&'a T, Output = T>
-        + Default
-        + std::fmt::Display
-        + std::marker::Sync
-        + std::marker::Send
-        + 'static,
->(
-    data: &ColumnData<T>,
-) -> T {
+pub fn sum<T: NumericType<T>>(data: &ColumnData<T>) -> T {
     let (tx, rx) = mpsc::channel();
-    let ranges = tools::calculate_ranges(data.data().len(), 4);
+    let ranges = tools::calculate_ranges(data.data().len(), constants::NUMBER_OF_NODES);
     let data_threaded_ref = data.data();
     for range in ranges {
         let data_safe = data_threaded_ref.clone();

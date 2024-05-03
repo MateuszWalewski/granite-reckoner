@@ -1,5 +1,8 @@
-use crate::constants;
-use std::cmp;
+use std::{cmp,
+    fmt::{self,Formatter, Debug},
+};
+
+use crate::{Column, NumericType};
 
 pub fn calculate_ranges(data_size: usize, number_of_nodes: usize) -> Vec<(usize, usize)> {
     let mut ranges: Vec<(usize, usize)> = vec![];
@@ -23,6 +26,18 @@ pub fn calculate_ranges(data_size: usize, number_of_nodes: usize) -> Vec<(usize,
     }
 
     ranges
+}
+
+impl<T: NumericType<T>> Debug for Column<T> {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
+        let inner_data = self.data.data();
+        for idx in 0..inner_data.len() - 1 {
+            write!(f, "{}\n", inner_data[idx])?;
+        }
+        write!(f, "{}", inner_data[inner_data.len() - 1])?;
+
+        Ok(())
+    }
 }
 
 #[cfg(test)]
