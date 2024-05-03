@@ -1,5 +1,5 @@
 [package]
-name = "multithreaded_calcs"
+name = "granite_reckoner"
 version = "0.1.0"
 edition = "2021"
 
