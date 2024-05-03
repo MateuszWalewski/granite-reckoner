@@ -1,5 +1,5 @@
 use assert_approx_eq::assert_approx_eq;
-use multithreaded_calcs::Column;
+use granite_reckoner::Column;
 
 #[test]
 fn test_column_sum_function_on_f32_works() {

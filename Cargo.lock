@@ -9,7 +9,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3c07dab4369547dbe5114677b33fbbf724971019f3818172d59a97a61c774ffd"
 
 [[package]]
-name = "multithreaded_calcs"
+name = "granite_reckoner"
 version = "0.1.0"
 dependencies = [
  "assert_approx_eq",
