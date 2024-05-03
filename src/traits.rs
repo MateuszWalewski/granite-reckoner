@@ -39,8 +39,8 @@ impl<
             + for<'a> Add<&'a T, Output = T>
             + Debug
             + Default
-            + std::marker::Send
-            + std::marker::Sync
+            + Send
+            + Sync
             + 'static,
     > NumericType<T> for T
 {
