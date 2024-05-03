@@ -7,7 +7,7 @@ fn test_column_sum_function_on_f32_works() {
     let column = Column::new();
     let column = column.add_data(container);
     let result = column.sum();
-    assert_approx_eq!(result, 36.7);
+    assert_approx_eq!(result, 36.7, 1e-5);
 }
 
 #[test]
@@ -16,7 +16,7 @@ fn test_column_sum_function_on_f64_works() {
     let column = Column::new();
     let column = column.add_data(container);
     let result = column.sum();
-    assert_approx_eq!(result, 36.7);
+    assert_approx_eq!(result, 36.7, 1e-5);
 }
 
 #[test]

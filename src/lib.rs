@@ -57,7 +57,17 @@ impl<T: Numeric + Display> Debug for Column<T> {
     }
 }
 
-impl<T: for<'a> Add<&'a T, Output = T> + Numeric + Debug + Display + Default> Column<T> {
+impl<
+        T: for<'a> Add<&'a T, Output = T>
+            + Numeric
+            + Debug
+            + Display
+            + Default
+            + std::marker::Send
+            + std::marker::Sync
+            + 'static,
+    > Column<T>
+{
     pub fn new() -> EmptyColumn<T> {
         EmptyColumn::<T> {
             phantom: PhantomData,
