@@ -29,6 +29,28 @@ pub fn calculate_ranges(data_size: usize, number_of_nodes: usize) -> Vec<(usize,
     ranges
 }
 
+pub fn partial_min<T: PartialOrd>(a: T, b: T) -> Option<T> {
+    if let Some(ordering) = a.partial_cmp(&b) {
+        match ordering {
+            std::cmp::Ordering::Less | std::cmp::Ordering::Equal => Some(a),
+            std::cmp::Ordering::Greater => Some(b),
+        }
+    } else {
+        None
+    }
+}
+
+pub fn partial_max<T: PartialOrd>(a: T, b: T) -> Option<T> {
+    if let Some(ordering) = a.partial_cmp(&b) {
+        match ordering {
+            std::cmp::Ordering::Less | std::cmp::Ordering::Equal => Some(b),
+            std::cmp::Ordering::Greater => Some(a),
+        }
+    } else {
+        None
+    }
+}
+
 impl<T: NumericType<T>> Debug for Column<T> {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         let inner_data = self.data.data();

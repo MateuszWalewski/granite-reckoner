@@ -36,8 +36,16 @@ impl<T: NumericType<T>> Column<T> {
         aggregator::sum(&self.data)
     }
 
+    pub fn min(&self) -> T {
+        aggregator::min(&self.data)
+    }
+
+    pub fn max(&self) -> T {
+        aggregator::max(&self.data)
+    }
+
     pub fn count(&self) -> usize {
-        aggregator::count(&self.data)
+        self.data.data().len()
     }
 
     pub fn print(&self) {
