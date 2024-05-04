@@ -31,6 +31,9 @@ pub trait NumericType<T>:
     + Send
     + Sync
     + 'static
+    + Copy
+    + PartialOrd
+    + PartialEq
 {
 }
 impl<
@@ -41,7 +44,10 @@ impl<
             + Default
             + Send
             + Sync
-            + 'static,
+            + 'static
+            + Copy
+            + PartialOrd
+            + PartialEq,
     > NumericType<T> for T
 {
 }
