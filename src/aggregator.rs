@@ -5,22 +5,22 @@ use std::{
 };
 
 pub fn sum<T: NumericType<T>>(data: &ColumnData<T>) -> Option<T> {
-    let rx = engine(data, sum_on_node);
-    gather_from_nodes(rx, Some(T::default()), |acc, x| acc?.checked_add(x?))
+    let received = engine(data, sum_on_node);
+    gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?))
 }
 
 pub fn min<T: NumericType<T>>(data: &ColumnData<T>) -> Option<T> {
-    let rx = engine(data, min_on_node);
-    gather_from_nodes(rx, None, |min, x| match min {
-        None => x,
+    let received = engine(data, min_on_node);
+    gather_from_nodes(received, Some(T::MAX), |min, x| match min {
+        None => None,
         Some(curr_min) => tools::partial_min(curr_min, x?),
     })
 }
 
 pub fn max<T: NumericType<T>>(data: &ColumnData<T>) -> Option<T> {
-    let rx = engine(data, max_on_node);
-    gather_from_nodes(rx, None, |max, x| match max {
-        None => x,
+    let received = engine(data, max_on_node);
+    gather_from_nodes(received, Some(T::MIN), |max, x| match max {
+        None => None,
         Some(curr_max) => tools::partial_max(curr_max, x?),
     })
 }
@@ -68,7 +68,7 @@ pub fn sum_on_node<T: NumericType<T>>(
 ) -> Option<T> {
     data_safe[begin..end]
         .iter()
-        .fold(Some(T::default()), |acc, &e| acc?.checked_add(e))
+        .fold(Some(T::default()), |acc, &x| acc?.checked_add(x))
 }
 
 pub fn min_on_node<T: NumericType<T>>(
@@ -78,8 +78,8 @@ pub fn min_on_node<T: NumericType<T>>(
 ) -> Option<T> {
     data_safe[begin..end]
         .iter()
-        .fold(None, |min, &x| match min {
-            None => Some(x),
+        .fold(Some(T::MAX), |min, &x| match min {
+            None => None,
             Some(curr_min) => tools::partial_min(curr_min, x),
         })
 }
@@ -91,8 +91,8 @@ pub fn max_on_node<T: NumericType<T>>(
 ) -> Option<T> {
     data_safe[begin..end]
         .iter()
-        .fold(None, |max, &x| match max {
-            None => Some(x),
+        .fold(Some(T::MIN), |max, &x| match max {
+            None => None,
             Some(curr_max) => tools::partial_max(curr_max, x),
         })
 }
