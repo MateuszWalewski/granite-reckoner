@@ -32,20 +32,21 @@ impl<T: NumericType<T>> Column<T> {
         }
     }
 
-    pub fn sum(&self) -> T {
+    pub fn sum(&self) -> Option<T> {
         aggregator::sum(&self.data)
     }
 
-    pub fn min(&self) -> T {
+    pub fn min(&self) -> Option<T> {
         aggregator::min(&self.data)
     }
 
-    pub fn max(&self) -> T {
+    pub fn max(&self) -> Option<T> {
         aggregator::max(&self.data)
     }
 
-    pub fn count(&self) -> usize {
-        self.data.data().len()
+    pub fn count(&self) -> Option<usize> {
+        // for returning consistency
+        Some(self.data.data().len())
     }
 
     pub fn print(&self) {
