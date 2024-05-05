@@ -45,7 +45,7 @@ impl<T: NumericType<T>> Column<T> {
     }
 
     pub fn count(&self) -> Option<usize> {
-        // for returning consistency
+        // for the interface consistency
         Some(self.data.data().len())
     }
 
