@@ -1,6 +1,8 @@
 use assert_approx_eq::assert_approx_eq;
 use granite_reckoner::Column;
 
+mod common;
+
 #[test]
 fn test_column_sum_function_on_f32_works() {
     let container: Vec<f32> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
@@ -701,4 +703,124 @@ fn test_column_max_function_on_isize_works() {
         .max()
         .expect("all the input data should be comparable");
     assert_eq!(result, 8);
+}
+
+#[test]
+fn load_test_column_sum_on_5_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_5M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 9997165331593.543, 1e5);
+}
+
+#[test]
+fn load_test_column_sum_on_10_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_10M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 14996497014084.932, 1e5);
+}
+
+#[test]
+fn load_test_column_sum_on_20_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_20M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, -20010771492612.383, 1e5);
+}
+
+#[test]
+fn load_test_column_min_on_5_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_5M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .min()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, -999999.5781282932, 1e5);
+}
+
+#[test]
+fn load_test_column_min_on_10_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_10M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .min()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, -1999998.7980072543, 1e5);
+}
+
+#[test]
+fn load_test_column_min_on_20_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_20M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .min()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, -6999999.502178693, 1e5);
+}
+
+#[test]
+fn load_test_column_max_on_5_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_5M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .max()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, 4999998.977779031, 1e5);
+}
+
+#[test]
+fn load_test_column_max_on_10_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_10M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .max()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, 4999999.815092964, 1e5);
+}
+
+#[test]
+fn load_test_column_max_on_20_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_20M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .max()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, 4999999.481657896, 1e5);
+}
+
+#[test]
+fn load_test_column_count_on_5_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_5M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.count().expect("count should always work");
+    assert_eq!(result, 5000000);
+}
+
+#[test]
+fn load_test_column_count_on_10_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_10M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.count().expect("count should always work");
+    assert_eq!(result, 10000000);
+}
+
+#[test]
+fn load_test_column_count_on_20_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_20M.txt");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.count().expect("count should always work");
+    assert_eq!(result, 20000000);
 }
