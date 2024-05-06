@@ -1,24 +1,24 @@
-use crate::{constants, tools, ColumnData, NumericType};
+use crate::{tools, ColumnData, NumericType};
 use std::{
     sync::{mpsc, Arc},
     thread,
 };
 
-pub fn sum<T: NumericType<T>>(data: &ColumnData<T>) -> Option<T> {
-    let received = engine(data, sum_on_node);
+pub fn sum<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {
+    let received = engine(data, sum_on_node, number_of_threads);
     gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?))
 }
 
-pub fn min<T: NumericType<T>>(data: &ColumnData<T>) -> Option<T> {
-    let received = engine(data, min_on_node);
+pub fn min<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {
+    let received = engine(data, min_on_node, number_of_threads);
     gather_from_nodes(received, Some(T::MAX), |min, x| match min {
         None => None,
         Some(curr_min) => tools::partial_min(curr_min, x?),
     })
 }
 
-pub fn max<T: NumericType<T>>(data: &ColumnData<T>) -> Option<T> {
-    let received = engine(data, max_on_node);
+pub fn max<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {
+    let received = engine(data, max_on_node, number_of_threads);
     gather_from_nodes(received, Some(T::MIN), |max, x| match max {
         None => None,
         Some(curr_max) => tools::partial_max(curr_max, x?),
@@ -37,14 +37,18 @@ where
     receiver.iter().fold(init, |max, x| func(max, x))
 }
 
-fn engine<T: NumericType<T>, F>(data: &ColumnData<T>, func: F) -> mpsc::Receiver<Option<T>>
+fn engine<T: NumericType<T>, F>(
+    data: &ColumnData<T>,
+    func: F,
+    number_of_threads: usize,
+) -> mpsc::Receiver<Option<T>>
 where
     F: Fn(Arc<Vec<T>>, usize, usize) -> Option<T> + Send + 'static + Copy,
 {
     let (tx, rx) = mpsc::channel();
-    let ranges = tools::calculate_ranges(data.data().len(), constants::NUMBER_OF_NODES);
+    let ranges = tools::calculate_ranges(data.data().len(), number_of_threads);
     let data_threaded_ref = data.data();
-    let mut threads = Vec::<thread::JoinHandle<()>>::with_capacity(constants::NUMBER_OF_NODES);
+    let mut threads = Vec::<thread::JoinHandle<()>>::with_capacity(number_of_threads);
     for range in ranges {
         let data_safe = data_threaded_ref.clone();
         let tx1 = tx.clone();
