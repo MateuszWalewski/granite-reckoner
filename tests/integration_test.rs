@@ -711,7 +711,7 @@ fn load_test_column_sum_on_1_m_row_data_works() {
     let column = Column::new();
     let column = column.add_data(container);
     let result = column.sum().expect("there shouldn't be overflow");
-    assert_approx_eq!(result, -916668927.4241154, 1e5);
+    assert_approx_eq!(result, -916668927.4241314, 1.0e-3);
 }
 
 #[test]
@@ -720,7 +720,7 @@ fn load_test_column_sum_on_3_m_row_data_works() {
     let column = Column::new();
     let column = column.add_data(container);
     let result = column.sum().expect("there shouldn't be overflow");
-    assert_approx_eq!(result, 2415672220.4374223, 1e5);
+    assert_approx_eq!(result, 2415672220.437594, 1.0e-3);
 }
 
 #[test]
@@ -731,7 +731,7 @@ fn load_test_column_min_on_1_m_row_data_works() {
     let result = column
         .min()
         .expect("all the input data should be comparable");
-    assert_approx_eq!(result, -999999.5781282932, 1e5);
+    assert_approx_eq!(result, -999996.8386372058, 1.0e-10);
 }
 
 #[test]
@@ -742,7 +742,7 @@ fn load_test_column_min_on_3_m_row_data_works() {
     let result = column
         .min()
         .expect("all the input data should be comparable");
-    assert_approx_eq!(result, -2999998.2130748853, 1e5);
+    assert_approx_eq!(result, -2999998.2130748853, 1.0e-10);
 }
 
 #[test]
@@ -753,7 +753,7 @@ fn load_test_column_max_on_1_m_row_data_works() {
     let result = column
         .max()
         .expect("all the input data should be comparable");
-    assert_approx_eq!(result, 999998.7204128127, 1e5);
+    assert_approx_eq!(result, 999998.7204128127, 1.0e-10);
 }
 
 #[test]
@@ -764,7 +764,7 @@ fn load_test_column_max_on_3_m_row_data_works() {
     let result = column
         .max()
         .expect("all the input data should be comparable");
-    assert_approx_eq!(result, 2999996.6583054466, 1e5);
+    assert_approx_eq!(result, 2999996.6583054466, 1.0e-10);
 }
 
 #[test]

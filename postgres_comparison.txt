@@ -1,0 +1,42 @@
+ Results from postgres on data_1M.csv:
+ COPY 1000000
+ 
+        sum         
+--------------------
+ -916668927.4241314 (~ granite-reckoner (-916668927.4241154)
+(1 row)
+
+postgres=# select max(a) from test ;
+        max        
+-------------------
+ 999998.7204128127 (= granite-reckoner (OK))
+(1 row)
+
+postgres=# select min(a) from test ;
+        min         
+--------------------
+ -999996.8386372058 ( = granite-reckoner (OK) )
+(1 row)
+
+Results from postgres on data_3M.csv:
+COPY 3000000
+
+postgres=# select sum(a) from test2 ;
+        sum        
+-------------------
+ 2415672220.437594 (~ granite-reckoner (2415672220.4374223)
+(1 row)
+
+postgres=# select min(a) from test2 ;
+         min         
+---------------------
+ -2999998.2130748853 (= granite-reckoner (OK))
+(1 row)
+
+postgres=# select max(a) from test2 ;
+        max         
+--------------------
+ 2999996.6583054466
+(1 row)
+
+
