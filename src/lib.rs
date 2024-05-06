@@ -1,3 +1,8 @@
+//! # Granite Reckoner
+//!
+//! `granite_reckoner` is a simple calculator enabling basic aggregations on Vec<T> in the specified number of threads. Works for all Rust's built-in numeric types.
+//!  Returns "None" for overflows and non-comparable data. 
+
 use std::marker::PhantomData;
 
 mod aggregator;
@@ -9,10 +14,12 @@ mod traits;
 use crate::column_data::ColumnData;
 use crate::traits::NumericType;
 
+/// Data wrapper without any data yet.
 pub struct EmptyColumn<T: NumericType<T>> {
     phantom: PhantomData<T>,
 }
 
+/// Data wrapper populated with values.
 pub struct Column<T: NumericType<T>> {
     data: ColumnData<T>,
 }

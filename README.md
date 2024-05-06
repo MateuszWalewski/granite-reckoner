@@ -1,7 +1,15 @@
+# Granite Reckoner
+
+A simple calculator enabling basic aggregations on Vec<T> in the specified number of threads. 
+Works for all Rust's built-in numeric types. Applies ```checked_*``` for sum and ```partial_cmp``` for min/max.
+
+## Usage
+
+```rust
 use granite_reckoner::Column;
 
 fn main() {
-    let container: Vec<i8> = vec![123, 1, 1, 2];
+    let container: Vec<i8> = vec![123, 1, 1, 2]; 
     let column = Column::new();
     let column = column.add_data(container);
     column.print();
@@ -15,3 +23,4 @@ fn main() {
     let _result = column.min_t(4);
     let _result = column.max_t(6);
 }
+```

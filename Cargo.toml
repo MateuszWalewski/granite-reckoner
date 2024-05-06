@@ -2,15 +2,16 @@
 name = "granite_reckoner"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+license = "MIT"
+description = "A simple calculator enabling basic aggregations on Vec<T> in the specified number of threads. Works for all Rust's built-in numeric types."
+readme = "README.md"
+repository = "https://github.com/MateuszWalewski/granite-reckoner"
 
 [dependencies]
 assert_approx_eq = "1.1.0"
 
 [dev-dependencies]
 criterion = "0.3"
-
 
 [[bench]]
 name = "benches"
