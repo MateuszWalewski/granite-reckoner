@@ -1,1 +1,0 @@
---- Add type promotions within aggregations
