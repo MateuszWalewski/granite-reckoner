@@ -33,15 +33,27 @@ impl<T: NumericType<T>> Column<T> {
     }
 
     pub fn sum(&self) -> Option<T> {
-        aggregator::sum(&self.data)
+        aggregator::sum(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn sum_t(&self, number_of_threads: usize) -> Option<T> {
+        aggregator::sum(&self.data, number_of_threads)
     }
 
     pub fn min(&self) -> Option<T> {
-        aggregator::min(&self.data)
+        aggregator::min(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn min_t(&self, number_of_threads: usize) -> Option<T> {
+        aggregator::min(&self.data, number_of_threads)
     }
 
     pub fn max(&self) -> Option<T> {
-        aggregator::max(&self.data)
+        aggregator::max(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn max_t(&self, number_of_threads: usize) -> Option<T> {
+        aggregator::max(&self.data, number_of_threads)
     }
 
     pub fn count(&self) -> Option<usize> {
