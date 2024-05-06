@@ -1,1 +1,1 @@
-pub const NUMBER_OF_NODES: usize = 4;
+pub const NUMBER_OF_NODES: usize = 6;
