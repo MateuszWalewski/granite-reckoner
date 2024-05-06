@@ -1,6 +1,8 @@
 use assert_approx_eq::assert_approx_eq;
 use granite_reckoner::Column;
 
+mod common;
+
 #[test]
 fn test_column_sum_function_on_f32_works() {
     let container: Vec<f32> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
@@ -701,4 +703,84 @@ fn test_column_max_function_on_isize_works() {
         .max()
         .expect("all the input data should be comparable");
     assert_eq!(result, 8);
+}
+
+#[test]
+fn load_test_column_sum_on_1_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_1M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, -916668927.4241154, 1e5);
+}
+
+#[test]
+fn load_test_column_sum_on_3_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_3M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2415672220.4374223, 1e5);
+}
+
+#[test]
+fn load_test_column_min_on_1_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_1M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .min()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, -999999.5781282932, 1e5);
+}
+
+#[test]
+fn load_test_column_min_on_3_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_3M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .min()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, -2999998.2130748853, 1e5);
+}
+
+#[test]
+fn load_test_column_max_on_1_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_1M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .max()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, 999998.7204128127, 1e5);
+}
+
+#[test]
+fn load_test_column_max_on_3_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_3M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column
+        .max()
+        .expect("all the input data should be comparable");
+    assert_approx_eq!(result, 2999996.6583054466, 1e5);
+}
+
+#[test]
+fn load_test_column_count_on_1_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_1M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.count().expect("count should always work");
+    assert_eq!(result, 1000000);
+}
+
+#[test]
+fn load_test_column_count_on_3_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_3M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.count().expect("count should always work");
+    assert_eq!(result, 3000000);
 }
