@@ -4,10 +4,10 @@
 //!  Returns "None" for overflows and non-comparable data. 
 
 use std::marker::PhantomData;
+pub mod constants;
 
 mod aggregator;
 mod column_data;
-mod constants;
 mod tools;
 mod traits;
 
