@@ -1,7 +1,7 @@
 //! # Granite Reckoner
 //!
 //! `granite_reckoner` is a simple calculator enabling basic aggregations on Vec<T> in the specified number of threads. Works for all Rust's built-in numeric types.
-//!  Returns "None" for overflows and non-comparable data. 
+//!  Returns "None" for overflows and non-comparable data.
 
 use std::marker::PhantomData;
 pub mod constants;
@@ -43,12 +43,24 @@ impl<T: NumericType<T>> Column<T> {
         aggregator::sum(&self.data, constants::NUMBER_OF_NODES)
     }
 
+    pub fn sum_x2(&self) -> Option<T> {
+        aggregator::sum_x2(&self.data, constants::NUMBER_OF_NODES)
+    }
+
     pub fn sum_t(&self, number_of_threads: usize) -> Option<T> {
         if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
             println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
             return None;
         }
         aggregator::sum(&self.data, number_of_threads)
+    }
+
+    pub fn sum_x2_t(&self, number_of_threads: usize) -> Option<T> {
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        aggregator::sum_x2(&self.data, number_of_threads)
     }
 
     pub fn min(&self) -> Option<T> {

@@ -130,11 +130,11 @@ fn test_column_sum_function_u128_overflow_works() {
 
 #[test]
 fn test_column_sum_function_on_i8_works() {
-    let container: Vec<i8> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let container: Vec<i8> = vec![1, -4, 6, 1, 1, 5, -2, 4, 1, 5];
     let column = Column::new();
     let column = column.add_data(container);
     let result = column.sum().expect("there shouldn't be overflow");
-    assert_eq!(result, 26);
+    assert_eq!(result, 18);
 }
 
 #[test]
@@ -233,6 +233,239 @@ fn test_column_sum_function_isize_overflow_works() {
     let column = Column::new();
     let column = column.add_data(container);
     let result = column.sum();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_f32_works() {
+    let container: Vec<f32> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 197.93, 1.0e-4);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_f64_works() {
+    let container: Vec<f64> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 197.93, 1.0e-4);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_u8_works() {
+    let container: Vec<u8> = vec![1, 4, 2, 2, 0, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 71);
+}
+
+#[test]
+fn test_column_sum_x2_function_u8_overflow_works() {
+    let container: Vec<u8> = vec![u8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_u16_works() {
+    let container: Vec<u16> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 167);
+}
+
+#[test]
+fn test_column_sum_x2_function_u16_overflow_works() {
+    let container: Vec<u16> = vec![u16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_u32_works() {
+    let container: Vec<u32> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 167);
+}
+
+#[test]
+fn test_column_sum_x2_function_u32_overflow_works() {
+    let container: Vec<u32> = vec![u32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+#[test]
+fn test_column_sum_x2_function_on_u64_works() {
+    let container: Vec<u64> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 167);
+}
+
+#[test]
+fn test_column_sum_x2_function_u64_overflow_works() {
+    let container: Vec<u64> = vec![u64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_usize_works() {
+    let container: Vec<usize> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 167);
+}
+
+#[test]
+fn test_column_sum_x2_function_usize_overflow_works() {
+    let container: Vec<usize> = vec![usize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_u128_works() {
+    let container: Vec<u128> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 167);
+}
+
+#[test]
+fn test_column_sum_x2_function_u128_overflow_works() {
+    let container: Vec<u128> = vec![u128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_i8_works() {
+    let container: Vec<i8> = vec![1, -4, 2, 2, 2, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 100);
+}
+
+#[test]
+fn test_column_sum_x2_function_i8_overflow_works() {
+    let container: Vec<i8> = vec![i8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_i16_works() {
+    let container: Vec<i16> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 192);
+}
+
+#[test]
+fn test_column_sum_x2_function_i16_overflow_works() {
+    let container: Vec<i16> = vec![i16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_i32_works() {
+    let container: Vec<i32> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 192);
+}
+
+#[test]
+fn test_column_sum_x2_function_i32_overflow_works() {
+    let container: Vec<i32> = vec![i32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_i64_works() {
+    let container: Vec<i64> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 192);
+}
+
+#[test]
+fn test_column_sum_x2_function_i64_overflow_works() {
+    let container: Vec<i64> = vec![i64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_i128_works() {
+    let container: Vec<i128> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 192);
+}
+
+#[test]
+fn test_column_sum_x2_function_i128_overflow_works() {
+    let container: Vec<i128> = vec![i128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_sum_x2_function_on_isize_works() {
+    let container: Vec<isize> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_eq!(result, 192);
+}
+
+#[test]
+fn test_column_sum_x2_function_isize_overflow_works() {
+    let container: Vec<isize> = vec![isize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2();
     assert_eq!(result, None);
 }
 
@@ -721,6 +954,24 @@ fn load_test_column_sum_on_3_m_row_data_works() {
     let column = column.add_data(container);
     let result = column.sum().expect("there shouldn't be overflow");
     assert_approx_eq!(result, 2415672220.437594, 1.0e-3);
+}
+
+#[test]
+fn load_test_column_sum_x2_on_1_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_1M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.329285644276438e+17, 1.0e3);
+}
+
+#[test]
+fn load_test_column_sum_x2_on_3_m_row_data_works() {
+    let container: Vec<f64> = common::load_data("data_3M.csv");
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.sum_x2().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 8.996801005832153e+18, 1.0e6);
 }
 
 #[test]

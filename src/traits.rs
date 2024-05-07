@@ -2,7 +2,7 @@ use std::{
     default::Default,
     fmt::{Debug, Display},
     marker::{Send, Sync},
-    ops::Add,
+    ops::{Add, Mul},
 };
 // Supported types:
 // i8
@@ -127,6 +127,96 @@ impl CheckedAdd for f64 {
     }
 }
 
+pub trait CheckedMul {
+    fn checked_mul(self, other: Self) -> Option<Self>
+    where
+        Self: Sized;
+}
+
+impl CheckedMul for i8 {
+    fn checked_mul(self, other: i8) -> Option<i8> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for i16 {
+    fn checked_mul(self, other: i16) -> Option<i16> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for i32 {
+    fn checked_mul(self, other: i32) -> Option<i32> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for i64 {
+    fn checked_mul(self, other: i64) -> Option<i64> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for i128 {
+    fn checked_mul(self, other: i128) -> Option<i128> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for isize {
+    fn checked_mul(self, other: isize) -> Option<isize> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for u8 {
+    fn checked_mul(self, other: u8) -> Option<u8> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for u16 {
+    fn checked_mul(self, other: u16) -> Option<u16> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for u32 {
+    fn checked_mul(self, other: u32) -> Option<u32> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for u64 {
+    fn checked_mul(self, other: u64) -> Option<u64> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for u128 {
+    fn checked_mul(self, other: u128) -> Option<u128> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for usize {
+    fn checked_mul(self, other: usize) -> Option<usize> {
+        self.checked_mul(other)
+    }
+}
+
+impl CheckedMul for f32 {
+    fn checked_mul(self, other: f32) -> Option<f32> {
+        Some(self.mul(other))
+    }
+}
+
+impl CheckedMul for f64 {
+    fn checked_mul(self, other: f64) -> Option<f64> {
+        Some(self.mul(other))
+    }
+}
+
 pub trait MinMax {
     const MIN: Self;
     const MAX: Self;
@@ -205,7 +295,6 @@ impl MinMax for f64 {
 pub trait NumericType<T>:
     Numeric
     + Display
-    + for<'a> Add<&'a T, Output = T>
     + Debug
     + Default
     + Send
@@ -215,13 +304,13 @@ pub trait NumericType<T>:
     + PartialOrd
     + PartialEq
     + CheckedAdd
+    + CheckedMul
     + MinMax
 {
 }
 impl<
         T: Numeric
             + Display
-            + for<'a> Add<&'a T, Output = T>
             + Debug
             + Default
             + Send
@@ -231,6 +320,7 @@ impl<
             + PartialOrd
             + PartialEq
             + CheckedAdd
+            + CheckedMul
             + MinMax,
     > NumericType<T> for T
 {
