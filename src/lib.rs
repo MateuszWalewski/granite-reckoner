@@ -45,7 +45,7 @@ impl<T: NumericType<T>> Column<T> {
 
     pub fn sum_t(&self, number_of_threads: usize) -> Option<T> {
         if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
-            println!("The number of threads must be in range: (1..constants::NUMBER_OF_NODES)");
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
             return None;
         }
         aggregator::sum(&self.data, number_of_threads)
@@ -57,7 +57,7 @@ impl<T: NumericType<T>> Column<T> {
 
     pub fn min_t(&self, number_of_threads: usize) -> Option<T> {
         if number_of_threads > constants::NUMBER_OF_NODES {
-            println!("The number of threads must be in range: (1..constants::NUMBER_OF_NODES)");
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
             return None;
         }
         aggregator::min(&self.data, number_of_threads)
@@ -69,7 +69,7 @@ impl<T: NumericType<T>> Column<T> {
 
     pub fn max_t(&self, number_of_threads: usize) -> Option<T> {
         if number_of_threads > constants::NUMBER_OF_NODES {
-            println!("The number of threads must be in range: (1..constants::NUMBER_OF_NODES)");
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
             return None;
         }
         aggregator::max(&self.data, number_of_threads)
