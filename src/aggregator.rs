@@ -9,6 +9,11 @@ pub fn sum<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) ->
     gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?))
 }
 
+pub fn sum_x2<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {
+    let received = engine(data, sum_x2_on_node, number_of_threads);
+    gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?))
+}
+
 pub fn min<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {
     let received = engine(data, min_on_node, number_of_threads);
     gather_from_nodes(received, Some(T::MAX), |min, x| match min {
@@ -73,6 +78,18 @@ pub fn sum_on_node<T: NumericType<T>>(
     data_safe[begin..end]
         .iter()
         .fold(Some(T::default()), |acc, &x| acc?.checked_add(x))
+}
+
+pub fn sum_x2_on_node<T: NumericType<T>>(
+    data_safe: Arc<Vec<T>>,
+    begin: usize,
+    end: usize,
+) -> Option<T> {
+    data_safe[begin..end]
+        .iter()
+        .fold(Some(T::default()), |acc, &x| {
+            acc?.checked_add(x.checked_mul(x)?)
+        })
 }
 
 pub fn min_on_node<T: NumericType<T>>(
