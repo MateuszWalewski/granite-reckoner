@@ -18,7 +18,7 @@ fn main() {
     let _result = column.count();
     let _result = column.min();
     let _result = column.max();
-    // Specified number of threads within range (1..=constats::NUMBER_OF_NODES)
+    // Specified number of threads within range (1..=constants::NUMBER_OF_NODES)
     let _result = column.sum_t(2);
     let _result = column.min_t(4);
     let _result = column.max_t(6);
