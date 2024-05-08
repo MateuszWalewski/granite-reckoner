@@ -1172,6 +1172,705 @@ fn test_column_variance_function_isize_overflow_works() {
 }
 
 #[test]
+fn test_column_stddev_function_on_f32_works() {
+    let container: Vec<f32> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.4565106237190277, 1e-5);
+}
+
+#[test]
+fn test_column_stddev_function_on_f64_works() {
+    let container: Vec<f64> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.4565106237190277, 1e-5);
+}
+
+#[test]
+fn test_column_stddev_function_on_u8_works() {
+    let container: Vec<u8> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.3979157616563596, 1e-6);
+}
+
+#[test]
+fn test_column_stddev_function_u8_overflow_works() {
+    let container: Vec<u8> = vec![u8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_u16_works() {
+    let container: Vec<u16> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.3979157616563596, 1e-6);
+}
+
+#[test]
+fn test_column_stddev_function_u16_overflow_works() {
+    let container: Vec<u16> = vec![u16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_u32_works() {
+    let container: Vec<u32> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.3979157616563596, 1e-6);
+}
+
+#[test]
+fn test_column_stddev_function_u32_overflow_works() {
+    let container: Vec<u32> = vec![u32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+#[test]
+fn test_column_stddev_function_on_u64_works() {
+    let container: Vec<u64> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.3979157616563596, 1e-6);
+}
+
+#[test]
+fn test_column_stddev_function_u64_overflow_works() {
+    let container: Vec<u64> = vec![u64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_usize_works() {
+    let container: Vec<usize> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.3979157616563596, 1e-6);
+}
+
+#[test]
+fn test_column_stddev_function_usize_overflow_works() {
+    let container: Vec<usize> = vec![usize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_u128_works() {
+    let container: Vec<u128> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.3979157616563596, 1e-6);
+}
+
+#[test]
+fn test_column_stddev_function_u128_overflow_works() {
+    let container: Vec<u128> = vec![u128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_i8_works() {
+    let container: Vec<i8> = vec![1, -4, 6, 1, 1, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.22490309931942, 1e-10);
+}
+
+#[test]
+fn test_column_stddev_function_i8_overflow_works() {
+    let container: Vec<i8> = vec![i8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_i16_works() {
+    let container: Vec<i16> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.7178249316263163, 1e-7);
+}
+
+#[test]
+fn test_column_stddev_function_i16_overflow_works() {
+    let container: Vec<i16> = vec![i16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_i32_works() {
+    let container: Vec<i32> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.7178249316263163, 1e-7);
+}
+
+#[test]
+fn test_column_stddev_function_i32_overflow_works() {
+    let container: Vec<i32> = vec![i32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_i64_works() {
+    let container: Vec<i64> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.7178249316263163, 1e-7);
+}
+
+#[test]
+fn test_column_stddev_function_i64_overflow_works() {
+    let container: Vec<i64> = vec![i64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_i128_works() {
+    let container: Vec<i128> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.7178249316263163, 1e-7);
+}
+
+#[test]
+fn test_column_stddev_function_i128_overflow_works() {
+    let container: Vec<i128> = vec![i128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_stddev_function_on_isize_works() {
+    let container: Vec<isize> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.7178249316263163, 1e-7);
+}
+
+#[test]
+fn test_column_stddev_function_isize_overflow_works() {
+    let container: Vec<isize> = vec![isize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.stddev();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_f32_works() {
+    let container: Vec<f32> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 4.0777777777777775, 1e-6);
+}
+
+#[test]
+fn test_column_moment_i_function_on_f64_works() {
+    let container: Vec<f64> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 4.0777777777777775, 1e-6);
+}
+
+#[test]
+fn test_column_moment_i_function_on_u8_works() {
+    let container: Vec<u8> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.6666666666666665, 1e-9);
+}
+
+#[test]
+fn test_column_moment_i_function_u8_overflow_works() {
+    let container: Vec<u8> = vec![u8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_u16_works() {
+    let container: Vec<u16> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.6666666666666665, 1e-9);
+}
+
+#[test]
+fn test_column_moment_i_function_u16_overflow_works() {
+    let container: Vec<u16> = vec![u16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_u32_works() {
+    let container: Vec<u32> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.6666666666666665, 1e-9);
+}
+
+#[test]
+fn test_column_moment_i_function_u32_overflow_works() {
+    let container: Vec<u32> = vec![u32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+#[test]
+fn test_column_moment_i_function_on_u64_works() {
+    let container: Vec<u64> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.6666666666666665, 1e-9);
+}
+
+#[test]
+fn test_column_moment_i_function_u64_overflow_works() {
+    let container: Vec<u64> = vec![u64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_usize_works() {
+    let container: Vec<usize> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.6666666666666665, 1e-9);
+}
+
+#[test]
+fn test_column_moment_i_function_usize_overflow_works() {
+    let container: Vec<usize> = vec![usize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_u128_works() {
+    let container: Vec<u128> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 3.6666666666666665, 1e-9);
+}
+
+#[test]
+fn test_column_moment_i_function_u128_overflow_works() {
+    let container: Vec<u128> = vec![u128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_i8_works() {
+    let container: Vec<i8> = vec![1, -4, 6, 1, 1, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 1.8, 1e-10);
+}
+
+#[test]
+fn test_column_moment_i_function_i8_overflow_works() {
+    let container: Vec<i8> = vec![i8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_i16_works() {
+    let container: Vec<i16> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.6, 1e-7);
+}
+
+#[test]
+fn test_column_moment_i_function_i16_overflow_works() {
+    let container: Vec<i16> = vec![i16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_i32_works() {
+    let container: Vec<i32> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.6, 1e-7);
+}
+
+#[test]
+fn test_column_moment_i_function_i32_overflow_works() {
+    let container: Vec<i32> = vec![i32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_i64_works() {
+    let container: Vec<i64> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.6, 1e-7);
+}
+
+#[test]
+fn test_column_moment_i_function_i64_overflow_works() {
+    let container: Vec<i64> = vec![i64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_i128_works() {
+    let container: Vec<i128> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.6, 1e-7);
+}
+
+#[test]
+fn test_column_moment_i_function_i128_overflow_works() {
+    let container: Vec<i128> = vec![i128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_i_function_on_isize_works() {
+    let container: Vec<isize> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 2.6, 1e-7);
+}
+
+#[test]
+fn test_column_moment_i_function_isize_overflow_works() {
+    let container: Vec<isize> = vec![isize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_i();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_f32_works() {
+    let container: Vec<f32> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 21.992222222222225, 1e-5);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_f64_works() {
+    let container: Vec<f64> = vec![1.0, 4.5, 6.2, 2.4, 8.7, 5.5, 2.3, 4.2, 1.9];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 21.992222222222225, 1e-5);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_u8_works() {
+    let container: Vec<u8> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 18.555555555555557, 1e-9);
+}
+
+#[test]
+fn test_column_moment_ii_function_u8_overflow_works() {
+    let container: Vec<u8> = vec![u8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_u16_works() {
+    let container: Vec<u16> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 18.555555555555557, 1e-9);
+}
+
+#[test]
+fn test_column_moment_ii_function_u16_overflow_works() {
+    let container: Vec<u16> = vec![u16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_u32_works() {
+    let container: Vec<u32> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 18.555555555555557, 1e-9);
+}
+
+#[test]
+fn test_column_moment_ii_function_u32_overflow_works() {
+    let container: Vec<u32> = vec![u32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+#[test]
+fn test_column_moment_ii_function_on_u64_works() {
+    let container: Vec<u64> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 18.555555555555557, 1e-9);
+}
+
+#[test]
+fn test_column_moment_ii_function_u64_overflow_works() {
+    let container: Vec<u64> = vec![u64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_usize_works() {
+    let container: Vec<usize> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 18.555555555555557, 1e-9);
+}
+
+#[test]
+fn test_column_moment_ii_function_usize_overflow_works() {
+    let container: Vec<usize> = vec![usize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_u128_works() {
+    let container: Vec<u128> = vec![1, 4, 6, 2, 8, 5, 2, 4, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 18.555555555555557, 1e-9);
+}
+
+#[test]
+fn test_column_moment_ii_function_u128_overflow_works() {
+    let container: Vec<u128> = vec![u128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_i8_works() {
+    let container: Vec<i8> = vec![1, -4, 6, 1, 1, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 12.6, 1e-10);
+}
+
+#[test]
+fn test_column_moment_ii_function_i8_overflow_works() {
+    let container: Vec<i8> = vec![i8::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_i16_works() {
+    let container: Vec<i16> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 19.2, 1e-7);
+}
+
+#[test]
+fn test_column_moment_ii_function_i16_overflow_works() {
+    let container: Vec<i16> = vec![i16::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_i32_works() {
+    let container: Vec<i32> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 19.2, 1e-7);
+}
+
+#[test]
+fn test_column_moment_ii_function_i32_overflow_works() {
+    let container: Vec<i32> = vec![i32::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_i64_works() {
+    let container: Vec<i64> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 19.2, 1e-7);
+}
+
+#[test]
+fn test_column_moment_ii_function_i64_overflow_works() {
+    let container: Vec<i64> = vec![i64::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_i128_works() {
+    let container: Vec<i128> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 19.2, 1e-7);
+}
+
+#[test]
+fn test_column_moment_ii_function_i128_overflow_works() {
+    let container: Vec<i128> = vec![i128::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
+fn test_column_moment_ii_function_on_isize_works() {
+    let container: Vec<isize> = vec![1, -4, 6, 2, 8, 5, -2, 4, 1, 5];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii().expect("there shouldn't be overflow");
+    assert_approx_eq!(result, 19.2, 1e-7);
+}
+
+#[test]
+fn test_column_moment_ii_function_isize_overflow_works() {
+    let container: Vec<isize> = vec![isize::MAX, 1];
+    let column = Column::new();
+    let column = column.add_data(container);
+    let result = column.moment_ii();
+    assert_eq!(result, None);
+}
+
+#[test]
 fn load_test_column_sum_on_1_m_row_data_works() {
     let container: Vec<f64> = common::load_data("data_1M.csv");
     let column = Column::new();
