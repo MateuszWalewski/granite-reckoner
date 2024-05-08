@@ -20,8 +20,7 @@ pub fn variance<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usiz
     let sum_x2 = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
     let received = engine(data, sum_on_node, number_of_threads);
     let sum = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
-    let count: f64 = T::to_f64(T::from_usize(data.data().len()));
-    let one: f64 = 1.0;
+    let count: f64 = data.data().len() as f64;
 
     let sum_f: f64 = T::to_f64(sum?);
     let sum_x2f: f64 = T::to_f64(sum_x2?);
@@ -30,9 +29,14 @@ pub fn variance<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usiz
     let moment_ii: f64 = sum_x2f.checked_div(count)?;
 
     let first_factor = moment_ii.checked_sub(moment_i2)?;
-    let second_factor = count.checked_div(count.checked_sub(one)?)?;
+    let second_factor = count.checked_div(count.checked_sub(1.0 as f64)?)?;
 
     first_factor.checked_mul(second_factor)
+}
+
+pub fn stddev<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<f64> {
+    let variance = variance(data, number_of_threads);
+    Some(variance?.sqrt())
 }
 
 pub fn min<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {

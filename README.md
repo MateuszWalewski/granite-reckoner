@@ -1,7 +1,8 @@
 # Granite Reckoner
 
-A simple calculator enabling basic aggregations on Vec<T> in the specified number of threads. 
-Works for all Rust's built-in numeric types. Applies ```checked_*``` for sum and ```partial_cmp``` for min/max.
+A simple aggregator enabling basic statistical operations on Vec<T> in the specified number of threads. 
+Applies ```checked_*``` and ```partial_cmp``` to deal with overflows and non-comparable input. 
+Works for all Rust's built-in numeric types. 
 
 ## Usage
 

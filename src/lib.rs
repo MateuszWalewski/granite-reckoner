@@ -46,17 +46,31 @@ impl<T: NumericType<T>> Column<T> {
     pub fn sum_x2(&self) -> Option<T> {
         aggregator::sum_x2(&self.data, constants::NUMBER_OF_NODES)
     }
-    /// Sample Variance. (Square of the sample standard deviation). Additive form used.
+    /// Sample Variance. (Square of the sample standard deviation).
     pub fn variance(&self) -> Option<f64> {
         aggregator::variance(&self.data, constants::NUMBER_OF_NODES)
     }
 
-    pub fn variance_t(&self, number_of_threads: usize) -> Option<f64> {
-        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
-            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
-            return None;
-        }
-        aggregator::variance(&self.data, number_of_threads)
+    /// Sample Standard Deviation.
+    pub fn stddev(&self) -> Option<f64> {
+        aggregator::stddev(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn min(&self) -> Option<T> {
+        aggregator::min(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn max(&self) -> Option<T> {
+        aggregator::max(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn count(&self) -> Option<usize> {
+        // for the interface consistency
+        Some(self.data.data().len())
+    }
+
+    pub fn print(&self) {
+        println!("{:?}", &self);
     }
 
     pub fn sum_t(&self, number_of_threads: usize) -> Option<T> {
@@ -75,8 +89,20 @@ impl<T: NumericType<T>> Column<T> {
         aggregator::sum_x2(&self.data, number_of_threads)
     }
 
-    pub fn min(&self) -> Option<T> {
-        aggregator::min(&self.data, constants::NUMBER_OF_NODES)
+    pub fn variance_t(&self, number_of_threads: usize) -> Option<f64> {
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        aggregator::variance(&self.data, number_of_threads)
+    }
+
+    pub fn stddev_t(&self, number_of_threads: usize) -> Option<f64> {
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        aggregator::stddev(&self.data, number_of_threads)
     }
 
     pub fn min_t(&self, number_of_threads: usize) -> Option<T> {
@@ -87,24 +113,11 @@ impl<T: NumericType<T>> Column<T> {
         aggregator::min(&self.data, number_of_threads)
     }
 
-    pub fn max(&self) -> Option<T> {
-        aggregator::max(&self.data, constants::NUMBER_OF_NODES)
-    }
-
     pub fn max_t(&self, number_of_threads: usize) -> Option<T> {
         if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
             println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
             return None;
         }
         aggregator::max(&self.data, number_of_threads)
-    }
-
-    pub fn count(&self) -> Option<usize> {
-        // for the interface consistency
-        Some(self.data.data().len())
-    }
-
-    pub fn print(&self) {
-        println!("{:?}", &self);
     }
 }
