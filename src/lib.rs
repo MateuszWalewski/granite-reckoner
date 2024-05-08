@@ -38,13 +38,25 @@ impl<T: NumericType<T>> Column<T> {
             phantom: PhantomData,
         }
     }
-
+    /// Sums x
     pub fn sum(&self) -> Option<T> {
         aggregator::sum(&self.data, constants::NUMBER_OF_NODES)
     }
-
+    /// Sums x^2
     pub fn sum_x2(&self) -> Option<T> {
         aggregator::sum_x2(&self.data, constants::NUMBER_OF_NODES)
+    }
+    /// Sample Variance. (Square of the sample standard deviation). Additive form used.
+    pub fn variance(&self) -> Option<f64> {
+        aggregator::variance(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    pub fn variance_t(&self, number_of_threads: usize) -> Option<f64> {
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        aggregator::variance(&self.data, number_of_threads)
     }
 
     pub fn sum_t(&self, number_of_threads: usize) -> Option<T> {

@@ -1,3 +1,4 @@
+use crate::traits::{CheckedDiv, CheckedMul, CheckedSub};
 use crate::{tools, ColumnData, NumericType};
 use std::{
     sync::{mpsc, Arc},
@@ -12,6 +13,26 @@ pub fn sum<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) ->
 pub fn sum_x2<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {
     let received = engine(data, sum_x2_on_node, number_of_threads);
     gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?))
+}
+
+pub fn variance<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<f64> {
+    let received = engine(data, sum_x2_on_node, number_of_threads);
+    let sum_x2 = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
+    let received = engine(data, sum_on_node, number_of_threads);
+    let sum = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
+    let count: f64 = T::to_f64(T::from_usize(data.data().len()));
+    let one: f64 = 1.0;
+
+    let sum_f: f64 = T::to_f64(sum?);
+    let sum_x2f: f64 = T::to_f64(sum_x2?);
+    let moment_i: f64 = sum_f.checked_div(count)?;
+    let moment_i2 = moment_i.checked_mul(moment_i)?;
+    let moment_ii: f64 = sum_x2f.checked_div(count)?;
+
+    let first_factor = moment_ii.checked_sub(moment_i2)?;
+    let second_factor = count.checked_div(count.checked_sub(one)?)?;
+
+    first_factor.checked_mul(second_factor)
 }
 
 pub fn min<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<T> {

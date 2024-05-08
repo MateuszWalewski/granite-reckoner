@@ -9,6 +9,7 @@ repository = "https://github.com/MateuszWalewski/granite-reckoner"
 
 [dependencies]
 assert_approx_eq = "1.1.0"
+num = "0.4.2"
 
 [dev-dependencies]
 criterion = "0.3"
