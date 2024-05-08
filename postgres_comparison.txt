@@ -1,42 +1,91 @@
- Results from postgres on data_1M.csv:
+LOAD TESTS
+----------
+
+Results from postgres on data_1M.csv:
  COPY 1000000
  
         sum         
 --------------------
- -916668927.4241314 (~ granite-reckoner (-916668927.4241154)
+ -916668927.4241314        (~ granite-reckoner: -916668927.4241154 (OK))
 (1 row)
 
-postgres=# select max(a) from test ;
+postgres=# select max(a) from test;
         max        
 -------------------
- 999998.7204128127 (= granite-reckoner (OK))
+ 999998.7204128127         (= granite-reckoner (OK))
 (1 row)
 
-postgres=# select min(a) from test ;
+postgres=# select min(a) from test;
         min         
 --------------------
- -999996.8386372058 ( = granite-reckoner (OK) )
+ -999996.8386372058        (= granite-reckoner (OK))
+(1 row)
+
+postgres=# select variance(a) from test;
+      variance      
+--------------------
+ 332928057073.77057        (~ granite-reckoner: 332928057073.7778 (OK))
+(1 row)
+
+postgres=# select stddev(a) from test;
+      stddev       
+-------------------
+ 576999.1829056415         (~ granite-reckoner: 576999.1829056414 (OK))
+(1 row)
+
+postgres=# select avg(a) from test;
+        avg         
+--------------------
+ -916.6689274240998        (~ granite-reckoner: -916.6689274241076 (OK))
+(1 row)
+
+postgres=# select avg(a*a) from test;
+        avg        
+-------------------
+ 332928564427.6407         (~ granite-reckoner: 332928564427.6432 (OK))
 (1 row)
 
 Results from postgres on data_3M.csv:
 COPY 3000000
 
-postgres=# select sum(a) from test2 ;
+postgres=# select sum(a) from test2;
         sum        
 -------------------
- 2415672220.437594 (~ granite-reckoner (2415672220.4374223)
+ 2415672220.437594         (~ granite-reckoner (2415672220.4374223)
 (1 row)
 
-postgres=# select min(a) from test2 ;
+postgres=# select min(a) from test2;
          min         
 ---------------------
- -2999998.2130748853 (= granite-reckoner (OK))
+ -2999998.2130748853       (= granite-reckoner (OK))
 (1 row)
 
-postgres=# select max(a) from test2 ;
+postgres=# select max(a) from test2;
         max         
 --------------------
- 2999996.6583054466 (= granite-reckoner (OK))
+ 2999996.6583054466        (= granite-reckoner (OK))
 (1 row)
 
+postgres=# select variance(a) from test2; 
+      variance      
+--------------------
+ 2998934019869.4346        (~ granite-reckoner: 2998934019869.524 (OK))
+(1 row)
 
+postgres=# select stddev(a) from test2; 
+      stddev       
+-------------------       
+ 1731743.058270915         (~ granite-reckoner: 1731743.0582709215 (OK))
+(1 row)
+
+postgres=# select avg(a) from test2; 
+        avg        
+-------------------
+ 805.2240734791476         (~ granite-reckoner: 805.2240734792233 (OK))
+(1 row)
+
+postgres=# select avg(a*a) from test2; 
+        avg         
+--------------------
+ 2998933668610.7134        (~ granite-reckoner: 2998933668610.6597 (OK))
+(1 row)
