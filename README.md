@@ -10,7 +10,7 @@ Works for all Rust's built-in numeric types.
 use granite_reckoner::Column;
 
 fn main() {
-    let container: Vec<u32> = vec![123, 1, 1, 2]; 
+    let container: Vec<u32> = vec![123, 1, 1, 2];
     let column = Column::new();
     let column = column.add_data(container);
     column.print();
