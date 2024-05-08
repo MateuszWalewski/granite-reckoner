@@ -15,21 +15,35 @@ pub fn sum_x2<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize)
     gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?))
 }
 
-pub fn variance<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<f64> {
-    let received = engine(data, sum_x2_on_node, number_of_threads);
-    let sum_x2 = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
+pub fn count<T: NumericType<T>>(data: &ColumnData<T>) -> Option<usize> {
+    Some(data.data().len())
+}
+
+pub fn moment_i<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<f64> {
     let received = engine(data, sum_on_node, number_of_threads);
     let sum = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
-    let count: f64 = data.data().len() as f64;
-
+    let count_f: f64 = count(data)? as f64;
     let sum_f: f64 = T::to_f64(sum?);
+    sum_f.checked_div(count_f)
+}
+
+pub fn moment_ii<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<f64> {
+    let received = engine(data, sum_x2_on_node, number_of_threads);
+    let sum_x2 = gather_from_nodes(received, Some(T::default()), |acc, x| acc?.checked_add(x?));
+    let count_f: f64 = count(data)? as f64;
     let sum_x2f: f64 = T::to_f64(sum_x2?);
-    let moment_i: f64 = sum_f.checked_div(count)?;
+    sum_x2f.checked_div(count_f)
+}
+
+pub fn variance<T: NumericType<T>>(data: &ColumnData<T>, number_of_threads: usize) -> Option<f64> {
+    let count_f: f64 = count(data)? as f64;
+
+    let moment_i: f64 = moment_i(data, number_of_threads)?;
+    let moment_ii: f64 = moment_ii(data, number_of_threads)?;
     let moment_i2 = moment_i.checked_mul(moment_i)?;
-    let moment_ii: f64 = sum_x2f.checked_div(count)?;
 
     let first_factor = moment_ii.checked_sub(moment_i2)?;
-    let second_factor = count.checked_div(count.checked_sub(1.0 as f64)?)?;
+    let second_factor = count_f.checked_div(count_f.checked_sub(1.0 as f64)?)?;
 
     first_factor.checked_mul(second_factor)
 }

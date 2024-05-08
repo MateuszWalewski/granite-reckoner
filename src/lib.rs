@@ -46,6 +46,17 @@ impl<T: NumericType<T>> Column<T> {
     pub fn sum_x2(&self) -> Option<T> {
         aggregator::sum_x2(&self.data, constants::NUMBER_OF_NODES)
     }
+
+    /// Moment-I (pop. Average)
+    pub fn moment_i(&self) -> Option<f64> {
+        aggregator::moment_i(&self.data, constants::NUMBER_OF_NODES)
+    }
+
+    /// Moment-II
+    pub fn moment_ii(&self) -> Option<f64> {
+        aggregator::moment_ii(&self.data, constants::NUMBER_OF_NODES)
+    }
+
     /// Sample Variance. (Square of the sample standard deviation).
     pub fn variance(&self) -> Option<f64> {
         aggregator::variance(&self.data, constants::NUMBER_OF_NODES)
@@ -65,8 +76,8 @@ impl<T: NumericType<T>> Column<T> {
     }
 
     pub fn count(&self) -> Option<usize> {
-        // for the interface consistency
-        Some(self.data.data().len())
+        // O(1) complexity
+        aggregator::count(&self.data) 
     }
 
     pub fn print(&self) {
@@ -87,6 +98,22 @@ impl<T: NumericType<T>> Column<T> {
             return None;
         }
         aggregator::sum_x2(&self.data, number_of_threads)
+    }
+
+    pub fn moment_i_t(&self, number_of_threads: usize) -> Option<f64> {
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        aggregator::moment_i(&self.data, number_of_threads)
+    }
+
+    pub fn moment_ii_t(&self, number_of_threads: usize) -> Option<f64> {
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        aggregator::moment_ii(&self.data, number_of_threads)
     }
 
     pub fn variance_t(&self, number_of_threads: usize) -> Option<f64> {
@@ -119,5 +146,15 @@ impl<T: NumericType<T>> Column<T> {
             return None;
         }
         aggregator::max(&self.data, number_of_threads)
+    }
+
+    // just to preserve the interface consistency
+    pub fn count_t(&self, number_of_threads: usize) -> Option<usize> { 
+        if number_of_threads < 1 || number_of_threads > constants::NUMBER_OF_NODES {
+            println!("The number of threads must be in range: (1..=constants::NUMBER_OF_NODES)");
+            return None;
+        }
+        // O(1) complexity
+        aggregator::count(&self.data)
     }
 }
