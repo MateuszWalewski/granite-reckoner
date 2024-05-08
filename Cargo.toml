@@ -1,9 +1,9 @@
 [package]
 name = "granite_reckoner"
-version = "0.3.0"
+version = "0.3.1"
 edition = "2021"
 license = "MIT"
-description = "A simple calculator enabling basic statistical operations on Vec<T> in the specified number of threads. Works for all Rust's built-in numeric types."
+description = "A simple aggregator enabling basic statistical operations on Vec<T> in the specified number of threads. Works for all Rust's built-in numeric types."
 readme = "README.md"
 repository = "https://github.com/MateuszWalewski/granite-reckoner"
 
