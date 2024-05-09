@@ -1,6 +1,6 @@
 [package]
 name = "granite_reckoner"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 license = "MIT"
 description = "A simple aggregator enabling basic statistical operations on Vec<T> in the specified number of threads. Works for all Rust's built-in numeric types."

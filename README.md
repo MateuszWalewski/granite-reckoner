@@ -14,9 +14,9 @@ fn main() {
     let column = Column::new();
     let column = column.add_data(container);
     column.print();
-    // Deafult number of threads from constants::NUMBER_OF_NODES
+    // Default number of threads from constants::NUMBER_OF_NODES
     let _result = column.sum();
-    let _result = column.sum_x2();
+    let _result = column.sum_x2(); // sums x^2
     let _result = column.moment_i(); // = average
     let _result = column.moment_ii();
     let _result = column.variance(); // sample variance
