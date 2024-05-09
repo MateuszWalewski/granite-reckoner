@@ -78,7 +78,7 @@ where
     F: FnOnce(Option<T>, Option<T>) -> Option<T>,
     F: Send + Copy + 'static,
 {
-    receiver.iter().fold(init, |max, x| func(max, x))
+    receiver.iter().fold(init, |acc, x| func(acc, x))
 }
 
 fn engine<T: NumericType<T>, F>(

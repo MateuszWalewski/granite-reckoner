@@ -22,20 +22,14 @@ use std::{
 
 pub trait Numeric {}
 
-impl Numeric for i8 {}
-impl Numeric for i16 {}
-impl Numeric for i32 {}
-impl Numeric for i64 {}
-impl Numeric for i128 {}
-impl Numeric for isize {}
-impl Numeric for u8 {}
-impl Numeric for u16 {}
-impl Numeric for u32 {}
-impl Numeric for u64 {}
-impl Numeric for u128 {}
-impl Numeric for usize {}
-impl Numeric for f32 {}
-impl Numeric for f64 {}
+macro_rules! impl_numeric {
+    ($($t:ty),*) => {
+        $(impl Numeric for $t {})*
+        };
+
+    }
+
+impl_numeric!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize, f32, f64);
 
 pub trait CheckedAdd {
     fn checked_add(self, other: Self) -> Option<Self>
@@ -43,77 +37,18 @@ pub trait CheckedAdd {
         Self: Sized;
 }
 
-impl CheckedAdd for i8 {
-    fn checked_add(self, other: i8) -> Option<i8> {
-        self.checked_add(other)
-    }
-}
+macro_rules! impl_checked_add {
+    ($($t:ty),*) => {
+        $(impl CheckedAdd for $t {
+            fn checked_add(self, other: $t) -> Option<$t> {
+                self.checked_add(other)
+            }
+        })*
+        };
 
-impl CheckedAdd for i16 {
-    fn checked_add(self, other: i16) -> Option<i16> {
-        self.checked_add(other)
     }
-}
 
-impl CheckedAdd for i32 {
-    fn checked_add(self, other: i32) -> Option<i32> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for i64 {
-    fn checked_add(self, other: i64) -> Option<i64> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for i128 {
-    fn checked_add(self, other: i128) -> Option<i128> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for isize {
-    fn checked_add(self, other: isize) -> Option<isize> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for u8 {
-    fn checked_add(self, other: u8) -> Option<u8> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for u16 {
-    fn checked_add(self, other: u16) -> Option<u16> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for u32 {
-    fn checked_add(self, other: u32) -> Option<u32> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for u64 {
-    fn checked_add(self, other: u64) -> Option<u64> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for u128 {
-    fn checked_add(self, other: u128) -> Option<u128> {
-        self.checked_add(other)
-    }
-}
-
-impl CheckedAdd for usize {
-    fn checked_add(self, other: usize) -> Option<usize> {
-        self.checked_add(other)
-    }
-}
+impl_checked_add!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize);
 
 impl CheckedAdd for f32 {
     fn checked_add(self, other: f32) -> Option<f32> {
@@ -133,77 +68,18 @@ pub trait CheckedMul {
         Self: Sized;
 }
 
-impl CheckedMul for i8 {
-    fn checked_mul(self, other: i8) -> Option<i8> {
-        self.checked_mul(other)
-    }
-}
+macro_rules! impl_checked_mul {
+    ($($t:ty),*) => {
+        $(impl CheckedMul for $t {
+            fn checked_mul(self, other: $t) -> Option<$t> {
+                self.checked_mul(other)
+            }
+        })*
+        };
 
-impl CheckedMul for i16 {
-    fn checked_mul(self, other: i16) -> Option<i16> {
-        self.checked_mul(other)
     }
-}
 
-impl CheckedMul for i32 {
-    fn checked_mul(self, other: i32) -> Option<i32> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for i64 {
-    fn checked_mul(self, other: i64) -> Option<i64> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for i128 {
-    fn checked_mul(self, other: i128) -> Option<i128> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for isize {
-    fn checked_mul(self, other: isize) -> Option<isize> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for u8 {
-    fn checked_mul(self, other: u8) -> Option<u8> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for u16 {
-    fn checked_mul(self, other: u16) -> Option<u16> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for u32 {
-    fn checked_mul(self, other: u32) -> Option<u32> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for u64 {
-    fn checked_mul(self, other: u64) -> Option<u64> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for u128 {
-    fn checked_mul(self, other: u128) -> Option<u128> {
-        self.checked_mul(other)
-    }
-}
-
-impl CheckedMul for usize {
-    fn checked_mul(self, other: usize) -> Option<usize> {
-        self.checked_mul(other)
-    }
-}
+impl_checked_mul!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize);
 
 impl CheckedMul for f32 {
     fn checked_mul(self, other: f32) -> Option<f32> {
@@ -223,77 +99,18 @@ pub trait CheckedSub {
         Self: Sized;
 }
 
-impl CheckedSub for i8 {
-    fn checked_sub(self, other: i8) -> Option<i8> {
-        self.checked_sub(other)
-    }
-}
+macro_rules! impl_checked_sub {
+    ($($t:ty),*) => {
+        $(impl CheckedSub for $t {
+            fn checked_sub(self, other: $t) -> Option<$t> {
+                self.checked_sub(other)
+            }
+        })*
+        };
 
-impl CheckedSub for i16 {
-    fn checked_sub(self, other: i16) -> Option<i16> {
-        self.checked_sub(other)
     }
-}
 
-impl CheckedSub for i32 {
-    fn checked_sub(self, other: i32) -> Option<i32> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for i64 {
-    fn checked_sub(self, other: i64) -> Option<i64> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for i128 {
-    fn checked_sub(self, other: i128) -> Option<i128> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for isize {
-    fn checked_sub(self, other: isize) -> Option<isize> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for u8 {
-    fn checked_sub(self, other: u8) -> Option<u8> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for u16 {
-    fn checked_sub(self, other: u16) -> Option<u16> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for u32 {
-    fn checked_sub(self, other: u32) -> Option<u32> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for u64 {
-    fn checked_sub(self, other: u64) -> Option<u64> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for u128 {
-    fn checked_sub(self, other: u128) -> Option<u128> {
-        self.checked_sub(other)
-    }
-}
-
-impl CheckedSub for usize {
-    fn checked_sub(self, other: usize) -> Option<usize> {
-        self.checked_sub(other)
-    }
-}
+impl_checked_sub!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize);
 
 impl CheckedSub for f32 {
     fn checked_sub(self, other: f32) -> Option<f32> {
@@ -313,77 +130,18 @@ pub trait CheckedDiv {
         Self: Sized;
 }
 
-impl CheckedDiv for i8 {
-    fn checked_div(self, other: i8) -> Option<i8> {
-        self.checked_div(other)
-    }
-}
+macro_rules! impl_checked_div {
+    ($($t:ty),*) => {
+        $(impl CheckedDiv for $t {
+            fn checked_div(self, other: $t) -> Option<$t> {
+                self.checked_div(other)
+            }
+        })*
+        };
 
-impl CheckedDiv for i16 {
-    fn checked_div(self, other: i16) -> Option<i16> {
-        self.checked_div(other)
     }
-}
 
-impl CheckedDiv for i32 {
-    fn checked_div(self, other: i32) -> Option<i32> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for i64 {
-    fn checked_div(self, other: i64) -> Option<i64> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for i128 {
-    fn checked_div(self, other: i128) -> Option<i128> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for isize {
-    fn checked_div(self, other: isize) -> Option<isize> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for u8 {
-    fn checked_div(self, other: u8) -> Option<u8> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for u16 {
-    fn checked_div(self, other: u16) -> Option<u16> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for u32 {
-    fn checked_div(self, other: u32) -> Option<u32> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for u64 {
-    fn checked_div(self, other: u64) -> Option<u64> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for u128 {
-    fn checked_div(self, other: u128) -> Option<u128> {
-        self.checked_div(other)
-    }
-}
-
-impl CheckedDiv for usize {
-    fn checked_div(self, other: usize) -> Option<usize> {
-        self.checked_div(other)
-    }
-}
+impl_checked_div!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize);
 
 impl CheckedDiv for f32 {
     fn checked_div(self, other: f32) -> Option<f32> {
@@ -402,75 +160,18 @@ pub trait MinMax {
     const MAX: Self;
 }
 
-impl MinMax for u8 {
-    const MIN: u8 = u8::MIN;
-    const MAX: u8 = u8::MAX;
-}
+macro_rules! impl_min_max {
+    ($($t:ty),*) => {
+        $(impl MinMax for $t {
+            const MIN: $t = <$t>::MIN;
+            const MAX: $t = <$t>::MAX;
+        })*
+        };
 
-impl MinMax for u16 {
-    const MIN: u16 = u16::MIN;
-    const MAX: u16 = u16::MAX;
-}
+    }
 
-impl MinMax for u32 {
-    const MIN: u32 = u32::MIN;
-    const MAX: u32 = u32::MAX;
-}
+impl_min_max!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize, f32, f64);
 
-impl MinMax for u64 {
-    const MIN: u64 = u64::MIN;
-    const MAX: u64 = u64::MAX;
-}
-
-impl MinMax for u128 {
-    const MIN: u128 = u128::MIN;
-    const MAX: u128 = u128::MAX;
-}
-
-impl MinMax for usize {
-    const MIN: usize = usize::MIN;
-    const MAX: usize = usize::MAX;
-}
-
-impl MinMax for i8 {
-    const MIN: i8 = i8::MIN;
-    const MAX: i8 = i8::MAX;
-}
-
-impl MinMax for i16 {
-    const MIN: i16 = i16::MIN;
-    const MAX: i16 = i16::MAX;
-}
-
-impl MinMax for i32 {
-    const MIN: i32 = i32::MIN;
-    const MAX: i32 = i32::MAX;
-}
-
-impl MinMax for i64 {
-    const MIN: i64 = i64::MIN;
-    const MAX: i64 = i64::MAX;
-}
-
-impl MinMax for i128 {
-    const MIN: i128 = i128::MIN;
-    const MAX: i128 = i128::MAX;
-}
-
-impl MinMax for isize {
-    const MIN: isize = isize::MIN;
-    const MAX: isize = isize::MAX;
-}
-
-impl MinMax for f32 {
-    const MIN: f32 = f32::MIN;
-    const MAX: f32 = f32::MAX;
-}
-
-impl MinMax for f64 {
-    const MIN: f64 = f64::MIN;
-    const MAX: f64 = f64::MAX;
-}
 pub trait ConvertFromUsize {
     fn from_usize(val: usize) -> Self;
 }
@@ -485,6 +186,7 @@ macro_rules! impl_convert_from_usize {
         };
 
     }
+
 impl_convert_from_usize!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize, f32, f64);
 
 pub trait Tof64 {
@@ -501,6 +203,7 @@ macro_rules! impl_convert_to_f64 {
         };
 
     }
+
 impl_convert_to_f64!(u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, isize, f32, f64);
 
 pub trait NumericType<T>:
